@@ -1,0 +1,12 @@
+services:
+  kant-os:
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile
+    container_name: kant-os-container
+    restart: unless-stopped
+    ports:
+      - "8420:8420"
+    volumes:
+      # Keep pairing config on the host so it survives container rebuilds.
+      - ../server/config.json:/kant/server/config.json

@@ -1,0 +1,5 @@
+{
+  "device": "kant-phone-01",
+  "host": "raspberrypi.local",
+  "port": 8420
+}
