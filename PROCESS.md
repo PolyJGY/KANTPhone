@@ -44,11 +44,11 @@ chmod +x deploy/manage-docker.sh && bash -n deploy/manage-docker.sh
 
 ```bash
 cd ~/KANTPhone
-sudo bash deploy/manage-docker.sh up
-sudo bash deploy/manage-docker.sh logs
-sudo bash deploy/manage-docker.sh ps
-sudo bash deploy/manage-docker.sh restart
-sudo bash deploy/manage-docker.sh down
+bash deploy/manage-docker.sh up
+bash deploy/manage-docker.sh logs
+bash deploy/manage-docker.sh ps
+bash deploy/manage-docker.sh restart
+bash deploy/manage-docker.sh down
 ```
 
 ```bash
