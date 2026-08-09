@@ -35,6 +35,14 @@ DEFAULT_CONFIG = {
     "device": "kant-phone-01",
     "host": "raspberrypi.local",
     "port": 8420,
+    "platform": "raspberry-pi",
+    "mode": "mobile-os",
+    "ui_theme": "KANT Dark",
+    "inspiration": "Volla Phone Plinius",
+    "target_hardware": "Raspberry Pi",
+    "runtime": "ubuntu-linux",
+    "activation": "remote-ssh + systemd",
+    "boot_mode": "kiosk",
 }
 
 
@@ -107,11 +115,26 @@ class KantOSHandler(SimpleHTTPRequestHandler):
                 **cfg,
                 "ssh_connected": check_ssh_connected(),
                 "docker_running": check_docker_running(),
+                "mobile_os_ready": check_ssh_connected() or check_docker_running(),
                 "uptime_seconds": round(time.time() - START_TIME, 1),
             })
             return
         if parsed.path == "/api/config":
             self._send_json(load_config())
+            return
+        if parsed.path == "/api/manifest":
+            cfg = load_config()
+            self._send_json({
+                "platform": cfg.get("platform", "raspberry-pi"),
+                "mode": cfg.get("mode", "mobile-os"),
+                "ui_theme": cfg.get("ui_theme", "KANT Dark"),
+                "inspiration": cfg.get("inspiration", "Volla Phone Plinius"),
+                "target_hardware": cfg.get("target_hardware", "Raspberry Pi"),
+                "runtime": cfg.get("runtime", "ubuntu-linux"),
+                "activation": cfg.get("activation", "remote-ssh + systemd"),
+                "boot_mode": cfg.get("boot_mode", "kiosk"),
+                "boot_url": f"http://{cfg.get('host', 'raspberrypi.local')}:{cfg.get('port', 8420)}",
+            })
             return
         super().do_GET()
 

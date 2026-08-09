@@ -1,5 +1,13 @@
 {
   "device": "kant-phone-01",
   "host": "raspberrypi.local",
-  "port": 8420
+  "port": 8420,
+  "platform": "raspberry-pi",
+  "mode": "mobile-os",
+  "ui_theme": "KANT Dark",
+  "inspiration": "Volla Phone Plinius",
+  "target_hardware": "Raspberry Pi",
+  "runtime": "ubuntu-linux",
+  "activation": "remote-ssh + systemd",
+  "boot_mode": "kiosk"
 }

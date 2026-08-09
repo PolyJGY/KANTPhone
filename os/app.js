@@ -11,6 +11,14 @@ const STATE = {
     device: "kant-phone-01",
     host: window.location.hostname || "raspberrypi.local",
     port: window.location.port || "8420",
+    platform: "raspberry-pi",
+    mode: "mobile-os",
+    ui_theme: "KANT Dark",
+    inspiration: "Volla Phone Plinius",
+    target_hardware: "Raspberry Pi",
+    runtime: "ubuntu-linux",
+    activation: "remote-ssh + systemd",
+    boot_mode: "kiosk",
   },
   status: null,     // last /api/status payload
   polling: null,
@@ -150,10 +158,13 @@ function renderSettingsApp(){
       IP : PORT 와 일치해야 합니다. VSCode Remote-SSH 로 접속한 뒤 서버를 실행하고,
       이 앱에서 같은 주소를 입력하면 상단 상태바에 연결 상태가 표시됩니다.
     </div>
-    <div class="section-title">디스플레이</div>
-    <div class="kv"><span>테마</span><b>KANT Dark</b></div>
-    <div class="kv"><span>영감</span><b>Volla Phone Plinius</b></div>
-    <div class="kv"><span>대상 하드웨어</span><b>Raspberry Pi</b></div>
+    <div class="section-title">모바일 OS 환경</div>
+    <div class="kv"><span>플랫폼</span><b>${c.platform}</b></div>
+    <div class="kv"><span>모드</span><b>${c.mode}</b></div>
+    <div class="kv"><span>런타임</span><b>${c.runtime}</b></div>
+    <div class="kv"><span>테마</span><b>${c.ui_theme}</b></div>
+    <div class="kv"><span>영감</span><b>${c.inspiration}</b></div>
+    <div class="kv"><span>대상 하드웨어</span><b>${c.target_hardware}</b></div>
   `;
 }
 function wireSettings(){
@@ -233,6 +244,10 @@ function renderAboutApp(){
     </div>
     <div class="kv"><span>작성인</span><b>정구영</b></div>
     <div class="kv"><span>작성일</span><b>2026-08-08</b></div>
+    <div class="kv"><span>플랫폼</span><b>Raspberry Pi</b></div>
+    <div class="kv"><span>모드</span><b>mobile-os</b></div>
+    <div class="kv"><span>런타임</span><b>ubuntu-linux</b></div>
+    <div class="kv"><span>시작 방식</span><b>Remote-SSH + systemd + kiosk</b></div>
     <div class="kv"><span>디자인 영감</span><b>kant.spartaclub.kr</b></div>
     <div class="kv"><span>OS 영감</span><b>Volla Phone Plinius</b></div>
     <div class="section-title">KANT MANIFESTO (발췌)</div>

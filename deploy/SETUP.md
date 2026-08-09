@@ -67,6 +67,14 @@ sudo systemctl enable --now kant-os.service
 sudo systemctl status kant-os.service
 ```
 
+더 편리하게 한 번에 적용하려면:
+
+```bash
+sudo bash deploy/activate.sh
+```
+
+이 스크립트는 systemd 서비스와 kiosk autostart 를 함께 등록해, Raspberry Pi 부팅 시 바로 KANT OS 가 뜨도록 설정합니다.
+
 ## 6. 키오스크(전체화면 폰 화면)로 부팅 — 선택
 
 Pi 에 화면이 직접 연결되어 있고 데스크톱 환경(Raspberry Pi OS Desktop)을 쓴다면,

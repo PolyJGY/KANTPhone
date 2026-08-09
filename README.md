@@ -51,6 +51,9 @@ Raspberry Pi 에 실제로 올리는 전체 절차(VSCode Remote-SSH, Docker, sy
 - **시그니처 요소**: README 3장에서 저자가 가장 두려워한 지점 — "IP:PORT 실행 여부 확인" — 을
   홈 화면 상단의 실시간 페어링 카드로 만들었습니다. SSH(`systemctl is-active ssh`)와
   Docker(`docker info`) 상태를 서버가 직접 확인해 상태바 점(dot)과 카드 배지로 보여줍니다.
+- **시스템화된 모바일 OS 구조**: 이제 이 환경은 단순한 화면이 아니라 Raspberry Pi 전용 모바일 OS 구성요소를 명확히 가집니다.
+  `platform`, `mode`, `ui_theme`, `inspiration`, `target_hardware`, `runtime`, `activation`, `boot_mode` 를
+  서버 설정과 상태 API 에 통합해, "Volla-like environment on Pi" 를 실제 실행 구조로 정리했습니다.
 
 ## 3. 앱
 
@@ -68,6 +71,7 @@ Raspberry Pi 에 실제로 올리는 전체 절차(VSCode Remote-SSH, Docker, sy
 - Volla Plinius 처럼 알림 셰이드, 앱 드로어 스와이프 제스처 추가
 - `server/server.py` 의 상태 API 를 실제 Wi-Fi/블루투스 페어링 로직과 연결
 - Raspberry Pi Compute Module 기반 실물 하드웨어 설계로 확장
+- `deploy/activate.sh` 를 실제 Pi 에서 실행해 부팅 시 자동 실행되는 완성형 모바일 OS 환경으로 이어가기
 
 ---
 
