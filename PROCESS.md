@@ -33,3 +33,24 @@ nmap -sn 192.168.1.0/24
 ```bash
 http://<pi-ip>:8420
 ```
+
+
+
+
+```bash
+chmod +x deploy/manage-docker.sh && bash -n deploy/manage-docker.sh
+```
+
+
+```bash
+cd ~/KANTPhone
+sudo bash deploy/manage-docker.sh up
+sudo bash deploy/manage-docker.sh logs
+sudo bash deploy/manage-docker.sh ps
+sudo bash deploy/manage-docker.sh restart
+sudo bash deploy/manage-docker.sh down
+```
+
+```bash
+http://<pi-ip>:8420
+```
