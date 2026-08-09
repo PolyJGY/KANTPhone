@@ -76,13 +76,31 @@ def check_ssh_connected():
         return False
 
 
+def find_executable(name):
+    """Find an executable in PATH or common install locations."""
+    if shutil.which(name):
+        return shutil.which(name)
+
+    for candidate in [
+        os.path.join(os.path.expanduser("~"), ".local", "bin", name),
+        os.path.join(os.path.expanduser("~"), "bin", name),
+        os.path.join("/usr", "local", "bin", name),
+        os.path.join("/usr", "bin", name),
+        os.path.join("/snap", "bin", name),
+    ]:
+        if os.path.isfile(candidate) and os.access(candidate, os.X_OK):
+            return candidate
+    return None
+
+
 def check_docker_running():
     """Best-effort: is the docker daemon up and are containers running?"""
-    if not shutil.which("docker"):
+    docker_bin = find_executable("docker")
+    if not docker_bin:
         return False
     try:
         out = subprocess.run(
-            ["docker", "info"],
+            [docker_bin, "info"],
             capture_output=True, text=True, timeout=2,
         )
         return out.returncode == 0

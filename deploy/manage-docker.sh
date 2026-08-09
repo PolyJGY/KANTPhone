@@ -7,10 +7,52 @@ PID_FILE="$ROOT_DIR/deploy/.kant-os.pid"
 LOG_FILE="$ROOT_DIR/deploy/kant-os.log"
 COMPOSE_CMD=()
 
-if docker compose version >/dev/null 2>&1; then
-  COMPOSE_CMD=(docker compose)
-elif command -v docker-compose >/dev/null 2>&1; then
-  COMPOSE_CMD=(docker-compose)
+find_binary() {
+  local name="$1"
+  local candidate
+
+  if command -v "$name" >/dev/null 2>&1; then
+    command -v "$name"
+    return 0
+  fi
+
+  if [[ -n "${SUDO_USER:-}" ]]; then
+    local user_home
+    user_home="$(getent passwd "$SUDO_USER" | cut -d: -f6 2>/dev/null || true)"
+    if [[ -n "$user_home" ]]; then
+      for candidate in "$user_home/.local/bin/$name" "$user_home/bin/$name"; do
+        if [[ -x "$candidate" ]]; then
+          printf '%s\n' "$candidate"
+          return 0
+        fi
+      done
+    fi
+  fi
+
+  for candidate in "/usr/local/bin/$name" "/usr/bin/$name" "/snap/bin/$name"; do
+    if [[ -x "$candidate" ]]; then
+      printf '%s\n' "$candidate"
+      return 0
+    fi
+  done
+
+  return 1
+}
+
+if docker_bin="$(find_binary docker)"; then
+  if "$docker_bin" compose version >/dev/null 2>&1; then
+    COMPOSE_CMD=("$docker_bin" compose)
+  elif "$docker_bin" --version >/dev/null 2>&1; then
+    if compose_bin="$(find_binary docker-compose)"; then
+      COMPOSE_CMD=("$compose_bin")
+    fi
+  fi
+fi
+
+if ((${#COMPOSE_CMD[@]} == 0)); then
+  if compose_bin="$(find_binary docker-compose)"; then
+    COMPOSE_CMD=("$compose_bin")
+  fi
 fi
 
 start_direct_server() {
